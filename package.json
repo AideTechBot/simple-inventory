@@ -1,0 +1,20 @@
+{
+  "name": "simple-inventory",
+  "module": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "develop": "bun --watch src/index.ts",
+    "start": "bun src/index.ts"
+  },
+  "devDependencies": {
+    "bun-types": "latest",
+    "typed-htmx": "^0.3.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "hono": "^4.6.15",
+    "htmx.org": "^1.9.12"
+  }
+}
