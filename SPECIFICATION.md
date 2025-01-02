@@ -41,3 +41,9 @@ This is the table for each individual inventory entry, this allows us to count t
 | ---------------------------- | ------------------------- | ------------ | ----------------- | -------------- |
 | 12345                        | 12345                     | 01/01/1999   | 01/03/1999        | 01/12/2023     |
 | ...                          | ...                       | ...          | ...               | ...            |
+
+**Update:** There should also be a tertiary key that is an ID that points to a location, the location table should look like:
+
+| locationId (primary unique) | name (string) |
+| --------------------------- | ------------- |
+| ...                         | ...           |
