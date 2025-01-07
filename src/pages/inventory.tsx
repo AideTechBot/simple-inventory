@@ -1,7 +1,6 @@
 import { html } from "hono/html";
 import type { Context } from "hono";
 import { PageHead } from "@/components/head";
-import { executeQuery } from "@/database";
 import { INVENTORY_TABLE_PATH } from "@/constants";
 
 export const InventoryPage = (c: Context) => {

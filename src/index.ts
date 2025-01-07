@@ -12,6 +12,7 @@ import {
   PRODUCTS_PAGE_PATH,
   PRODUCTS_TABLE_PATH,
   SCAN_PAGE_PATH,
+  SCAN_SUBMIT_PAGE_PATH,
 } from "./constants";
 import { ProductsTable } from "./partials/products-table";
 import { InventoryTable } from "./partials/inventory-table";
@@ -39,5 +40,6 @@ app.get(INVENTORY_PAGE_PATH, InventoryPage);
 app.get(SCAN_PAGE_PATH, ScanPage);
 app.post(PRODUCTS_TABLE_PATH, ProductsTable);
 app.post(INVENTORY_TABLE_PATH, InventoryTable);
+app.post(SCAN_SUBMIT_PAGE_PATH, InventoryTable);
 
 export default app;
