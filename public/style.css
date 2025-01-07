@@ -3,10 +3,11 @@ body {
   header {
     text-align: center;
   }
+
   div.homepage-buttons,
   #scan-form {
     margin: 10px;
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
 
@@ -14,6 +15,10 @@ body {
     button.scan-button {
       margin-bottom: 5px;
     }
+  }
+
+  #scan-form {
+    display: none;
   }
   input.search-bar {
     margin: 10px auto;

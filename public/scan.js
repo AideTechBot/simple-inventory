@@ -19,24 +19,59 @@ navigator.mediaDevices
 
 // called when button to scan is pressed
 function onScan() {
-  document.getElementById("scan-upc").value = 324234;
-  document.getElementById("scan-upc").type = "text";
-  document.getElementById("scan-upc").readonly = true;
+  // find upc and set it
+  imageCapture
+    .grabFrame()
+    .then((imageBitmap) => {
+      const barcodeDetector = new BarcodeDetector({
+        formats: ["upc_a", "upc_e", "qr_code"],
+      });
 
-  document.getElementById("scan-form").setAttribute("style", `display:flex;`);
-  document.getElementById("scan-form").style.display = `flex`;
+      barcodeDetector
+        .detect(imageBitmap)
+        .then((barcodes) => {
+          if (barcodes.length === 0) {
+            // quit if there are no barcodes
+            alert("There are no codes");
+            return;
+          }
 
-  document.getElementById("scan-canvas").setAttribute("style", `display:none;`);
-  document.getElementById("scan-canvas").style.display = `none`;
-  document
-    .getElementById("scan-product")
-    .setAttribute("style", `display:none;`);
-  document.getElementById("scan-product").style.display = `none`;
+          barcodes.forEach((barcode) => {
+            console.log(barcode.rawValue);
+            document.getElementById("scan-upc").value = barcode.rawValue;
+
+            // show text showing upc
+            document.getElementById("scan-upc").type = "text";
+            document.getElementById("scan-upc").readonly = true;
+
+            // hide and show stuff
+            document
+              .getElementById("scan-form")
+              .setAttribute("style", `display:flex;`);
+            document.getElementById("scan-form").style.display = `flex`;
+
+            document
+              .getElementById("scan-canvas")
+              .setAttribute("style", `display:none;`);
+            document.getElementById("scan-canvas").style.display = `none`;
+            document
+              .getElementById("scan-product")
+              .setAttribute("style", `display:none;`);
+            document.getElementById("scan-product").style.display = `none`;
+          });
+
+          var audio = new Audio("beep.mp3");
+          audio.play();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    })
+    .catch((error) => ChromeSamples.log(error));
 }
 
 // called when button to submit is pressed
 function onSubmit() {
-  document.getElementById("scan-upc").value = 324234;
   if (document.getElementById("scan-form").valid()) {
     document.getElementById("scan-form").submit();
   }
