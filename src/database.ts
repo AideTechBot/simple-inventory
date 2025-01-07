@@ -11,3 +11,15 @@ export const executeQuery = (query: string) => {
 
   return result;
 };
+
+export const runQuery = (query: string) => {
+  const database = new Database("inventory_database.db", {
+    create: true,
+    strict: true,
+  });
+  const result = database.query(query).run();
+
+  database.close();
+
+  return result;
+};

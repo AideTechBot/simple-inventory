@@ -12,10 +12,13 @@ import {
   PRODUCTS_PAGE_PATH,
   PRODUCTS_TABLE_PATH,
   SCAN_PAGE_PATH,
+  SCAN_PRODUCT_FORM_PATH,
   SCAN_SUBMIT_PAGE_PATH,
 } from "./constants";
 import { ProductsTable } from "./partials/products-table";
 import { InventoryTable } from "./partials/inventory-table";
+import { ScanProductForm } from "./partials/scan-product-form";
+import { ScanSubmit } from "./pages/scan-submit";
 
 export const log = (message: string, ...rest: string[]) => {
   console.log(`[${new Date().toLocaleString()}]`, message, ...rest);
@@ -40,6 +43,7 @@ app.get(INVENTORY_PAGE_PATH, InventoryPage);
 app.get(SCAN_PAGE_PATH, ScanPage);
 app.post(PRODUCTS_TABLE_PATH, ProductsTable);
 app.post(INVENTORY_TABLE_PATH, InventoryTable);
-app.post(SCAN_SUBMIT_PAGE_PATH, InventoryTable);
+app.post(SCAN_PRODUCT_FORM_PATH, ScanProductForm);
+app.post(SCAN_SUBMIT_PAGE_PATH, ScanSubmit);
 
 export default app;

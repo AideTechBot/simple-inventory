@@ -1,5 +1,9 @@
-export function PageHead(props: { title: string; description: string }) {
-  const { title, description } = props;
+export function PageHead(props: {
+  title: string;
+  description: string;
+  refresh?: boolean;
+}) {
+  const { title, description, refresh } = props;
   return (
     <head>
       <title>{title}</title>
@@ -14,6 +18,7 @@ export function PageHead(props: { title: string; description: string }) {
       <script src="./barcode-detect.js" />
 
       <link href="style.css" rel="stylesheet" />
+      {refresh ? <meta http-equiv="refresh" content="0; url=/" /> : null}
     </head>
   );
 }

@@ -17,9 +17,18 @@ body {
     }
   }
 
+  #check-in-information {
+    display: flex;
+    flex-direction: column;
+  }
+
   #scan-form {
     display: none;
+    label {
+      margin-bottom: 5px;
+    }
   }
+
   input.search-bar {
     margin: 10px auto;
     padding: 5px;
@@ -51,6 +60,10 @@ table {
   td {
     padding: 10px;
     border: outset 2px #ccc;
+  }
+
+  tr:nth-child(odd) {
+    background-color: #ddd;
   }
 }
 

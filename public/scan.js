@@ -67,7 +67,20 @@ function onScan() {
           console.error(err);
         });
     })
-    .catch((error) => ChromeSamples.log(error));
+    .catch((error) => console.error(error));
+}
+
+function onCheckChange() {
+  if (document.getElementById("check-in-radio").checked) {
+    htmx.ajax("POST", "/scan-product-form", {
+      target: "#check-in-information",
+      values: {
+        upc: document.getElementById("scan-upc").value,
+      },
+    });
+  } else {
+    document.getElementById("check-in-information").innerHTML = "";
+  }
 }
 
 // called when button to submit is pressed
