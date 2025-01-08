@@ -16,6 +16,7 @@ import {
   SCAN_PRODUCT_FORM_PATH,
   SCAN_SUBMIT_PAGE_PATH,
   SUBMIT_CUSTOM_PRODUCT_PATH,
+  VIEW_QR_CODE_PATH,
 } from "./constants";
 import { ProductsTable } from "./partials/products-table";
 import { InventoryTable } from "./partials/inventory-table";
@@ -23,6 +24,7 @@ import { ScanProductForm } from "./partials/scan-product-form";
 import { ScanSubmit } from "./pages/scan-submit";
 import { AddCustomProductPage } from "./pages/add-custom-product";
 import { ProductSubmit } from "./pages/product-submit";
+import { QrCodePage } from "./pages/qr-code";
 
 export const log = (message: string, ...rest: string[]) => {
   console.log(`[${new Date().toLocaleString()}]`, message, ...rest);
@@ -51,5 +53,6 @@ app.post(SCAN_PRODUCT_FORM_PATH, ScanProductForm);
 app.post(SCAN_SUBMIT_PAGE_PATH, ScanSubmit);
 app.get(ADD_CUSTOM_PRODUCT_PATH, AddCustomProductPage);
 app.post(SUBMIT_CUSTOM_PRODUCT_PATH, ProductSubmit);
+app.get(`${VIEW_QR_CODE_PATH}/:upc`, QrCodePage);
 
 export default app;

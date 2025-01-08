@@ -1,11 +1,12 @@
 import type { Context } from "hono";
 import { executeQuery } from "@/database";
+import { VIEW_QR_CODE_PATH } from "@/constants";
 
 export const ProductsTable = async (c: Context) => {
   const search = (await c.req.formData()).get("search");
 
   const products: any[] = executeQuery(
-    `SELECT * FROM products WHERE products.name LIKE '%${search}%' OR products.upc LIKE '%${search}%' OR products.description LIKE '%${search}%' OR products.size LIKE '%${search}%'`
+    `SELECT upc, name, description, size, custom as QR FROM products WHERE products.name LIKE '%${search}%' OR products.upc LIKE '%${search}%' OR products.description LIKE '%${search}%' OR products.size LIKE '%${search}%'`
   );
 
   if (products.length === 0) {
@@ -28,7 +29,13 @@ export const ProductsTable = async (c: Context) => {
       {products.map((product) => (
         <tr>
           {headers.map((header) => (
-            <td>{product?.[header]}</td>
+            <td>
+              {header === "QR" ? (
+                <a href={`${VIEW_QR_CODE_PATH}/${product.upc}`}>VIEW</a>
+              ) : (
+                product?.[header]
+              )}
+            </td>
           ))}
         </tr>
       ))}
