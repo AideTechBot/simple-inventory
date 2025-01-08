@@ -29,6 +29,16 @@ body {
     }
   }
 
+  #custom-product-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: 10px auto;
+    label {
+      margin-bottom: 5px;
+    }
+  }
+
   input.search-bar {
     margin: 10px auto;
     padding: 5px;
@@ -36,6 +46,11 @@ body {
     width: 200px;
     font-family: monospace;
   }
+  a.link-button {
+    display: block;
+    margin: 10px auto;
+  }
+
   footer {
     text-align: center;
   }

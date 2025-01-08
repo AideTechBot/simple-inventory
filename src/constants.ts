@@ -1,5 +1,7 @@
 export const PRODUCTS_PAGE_PATH = "/products";
 export const PRODUCTS_TABLE_PATH = "/products-table";
+export const ADD_CUSTOM_PRODUCT_PATH = "/add-custom-product";
+export const SUBMIT_CUSTOM_PRODUCT_PATH = "/submit-custom-product";
 export const INVENTORY_PAGE_PATH = "/inventory";
 export const INVENTORY_TABLE_PATH = "/inventory-table";
 export const SCAN_PAGE_PATH = "/scan";

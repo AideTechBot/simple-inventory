@@ -1,7 +1,7 @@
 import { html } from "hono/html";
 import type { Context } from "hono";
 import { PageHead } from "@/components/head";
-import { PRODUCTS_TABLE_PATH } from "@/constants";
+import { ADD_CUSTOM_PRODUCT_PATH, PRODUCTS_TABLE_PATH } from "@/constants";
 
 export const ProductsPage = (c: Context) => {
   return c.html(
@@ -17,6 +17,9 @@ export const ProductsPage = (c: Context) => {
             <h1>Products</h1>
           </header>
           <main>
+            <a class="link-button" href={ADD_CUSTOM_PRODUCT_PATH}>
+              ADD CUSTOM PRODUCT
+            </a>
             <input
               class="search-bar"
               type="search"
