@@ -4,10 +4,9 @@ import { executeQuery } from "@/database";
 export const InventoryTable = async (c: Context) => {
   const search = (await c.req.formData()).get("search");
 
-  // TODO: filter by remove date and group by location, product, expiry, added
-  // maybe make this an option
+  // TODO: filter by remove date and group by location, product, expiry, added, removed, etc
   const inventory: any[] = executeQuery(
-    `SELECT products.name, products.size, locations.name as location, inventory.* FROM inventory INNER JOIN products ON inventory.productId = products.productId INNER JOIN locations ON locations.locationId = inventory.locationId WHERE products.name LIKE '%${search}%' OR products.upc LIKE '%${search}%' OR products.size LIKE '%${search}%' OR locations.name LIKE '%${search}%'`
+    `SELECT products.name, products.size, locations.name as location, inventory.* FROM inventory INNER JOIN products ON inventory.productId = products.productId INNER JOIN locations ON locations.locationId = inventory.locationId WHERE (products.name LIKE '%${search}%' OR products.upc LIKE '%${search}%' OR products.size LIKE '%${search}%' OR locations.name LIKE '%${search}%') AND (inventory.removed IS NULL OR inventory.removed > CURRENT_DATE)`
   );
 
   if (inventory.length === 0) {
@@ -18,7 +17,8 @@ export const InventoryTable = async (c: Context) => {
     (header) =>
       header !== "productId" &&
       header !== "inventoryId" &&
-      header !== "locationId"
+      header !== "locationId" &&
+      header !== "removed"
   );
 
   return c.html(

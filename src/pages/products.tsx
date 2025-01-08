@@ -4,8 +4,6 @@ import { PageHead } from "@/components/head";
 import { PRODUCTS_TABLE_PATH } from "@/constants";
 
 export const ProductsPage = (c: Context) => {
-  // TODO: add a way to print custom labels and add custom products
-  // TODO: add product count too maybe?
   return c.html(
     <>
       {html`<!DOCTYPE html>`}

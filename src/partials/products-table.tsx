@@ -12,6 +12,8 @@ export const ProductsTable = async (c: Context) => {
     return c.html(<></>);
   }
 
+  // TODO: add a way to print custom labels and add custom products
+  // TODO: add product count too maybe?
   const headers = Object.keys(products[0]).filter(
     (header) => header !== "productId"
   );
