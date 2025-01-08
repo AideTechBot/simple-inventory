@@ -25,6 +25,7 @@ import { ScanSubmit } from "./pages/scan-submit";
 import { AddCustomProductPage } from "./pages/add-custom-product";
 import { ProductSubmit } from "./pages/product-submit";
 import { QrCodePage } from "./pages/qr-code";
+import { serve } from "bun";
 
 export const log = (message: string, ...rest: string[]) => {
   console.log(`[${new Date().toLocaleString()}]`, message, ...rest);
@@ -55,4 +56,5 @@ app.get(ADD_CUSTOM_PRODUCT_PATH, AddCustomProductPage);
 app.post(SUBMIT_CUSTOM_PRODUCT_PATH, ProductSubmit);
 app.get(`${VIEW_QR_CODE_PATH}/:upc`, QrCodePage);
 
-export default app;
+log("Running inventory server...");
+serve({ fetch: app.fetch, port: 80 });
