@@ -23,10 +23,3 @@ bun start
 # Backup
 
 To backup the database, just copy `inventory_database.db` anywhere.
-
-# Files you don't have to worry about
-
-- `tsconfig.json`
-- `bun.lockb`
-- `.gitignore`
-- `node_modules/`
