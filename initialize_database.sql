@@ -6,8 +6,8 @@ CREATE TABLE "locations" (
 
 CREATE TABLE "products" (
 	"productId"	INTEGER NOT NULL UNIQUE,
-	"upc"	BIGINT,
-	"custom"	BOOLEAN NOT NULL,
+    "upc" BIGINT,
+	"custom" BOOLEAN NOT NULL,
 	"name"	VARCHAR(255) NOT NULL,
 	"description"	TEXT,
 	"size"	VARCHAR(50),
@@ -19,9 +19,12 @@ CREATE TABLE "inventory" (
     "productId" INT NOT NULL,
     "locationId" INT NOT NULL,
     "added" DATE NOT NULL,
-    "expiration" DATE NOT NULL,
+    "quantity" INTEGER NOT NULL,
     "removed" DATE,
     PRIMARY KEY("inventoryId" AUTOINCREMENT),
     FOREIGN KEY("locationId") REFERENCES "locations"("locationId"),
     FOREIGN KEY("productId") REFERENCES "products"("productId")
 );
+
+INSERT INTO locations(name) 
+VALUES('Kitchen'), ('Garage'), ('Basement Shelf'), ('Freezer Right'), ('Freezer Left');

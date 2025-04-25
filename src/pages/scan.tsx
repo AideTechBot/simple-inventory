@@ -32,12 +32,12 @@ export const ScanPage = (c: Context) => {
               </label>
 
               <label>
-                Expiration Date:
+                Quantity:
                 <input
                   required
-                  type="date"
-                  name="expiration"
-                  value="expiration"
+                  type="number"
+                  name="quantity"
+                  value="quantity"
                 />
               </label>
 

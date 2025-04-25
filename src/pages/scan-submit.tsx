@@ -7,7 +7,7 @@ export const ScanSubmit = async (c: Context) => {
   const body = await c.req.formData();
 
   const upc = body.get("upc");
-  const expiration = body.get("expiration");
+  const quantity = body.get("quantity");
   const checkedIn = body.get("check-in") === "true";
   const locationId = body.get("locationId");
 
@@ -19,24 +19,37 @@ export const ScanSubmit = async (c: Context) => {
   let showAlert = false;
 
   if (checkedIn) {
-    // If the product doesn't exist, create it.
     let productId;
+  
+    // Get or create the product
     if (name) {
       const { lastInsertRowid } = runQuery(
-        `INSERT INTO products (upc,custom,name,description,size) VALUES ('${upc}',false,'${name}','${description}','${size}')`
+        `INSERT INTO products (upc, custom, name, description, size) VALUES ('${upc}', false, '${name}', '${description}', '${size}')`
       );
       productId = lastInsertRowid;
     } else {
       const [{ foundProductId }] = executeQuery(
-        `SELECT productId as foundProductId FROM products WHERE products.upc = '${upc}'`
+        `SELECT productId as foundProductId FROM products WHERE upc = '${upc}'`
       ) as any;
       productId = foundProductId;
     }
-
-    // add the item to the inventory
-    runQuery(
-      `INSERT INTO inventory (productId,locationId,added,expiration,removed) VALUES ('${productId}',${locationId},CURRENT_DATE,'${expiration}',NULL)`
-    );
+  
+    // Check if the product already exists in inventory at this location
+    const existing = executeQuery(
+      `SELECT inventoryId FROM inventory WHERE removed IS NULL AND locationId = ${locationId} AND productId = ${productId} LIMIT 1`
+    ) as any;
+  
+    if (existing.length > 0) {
+      // Update quantity if exists
+      runQuery(
+        `UPDATE inventory SET quantity = quantity + ${quantity} WHERE inventoryId = ${existing[0].inventoryId}`
+      );
+    } else {
+      // Insert new inventory record
+      runQuery(
+        `INSERT INTO inventory (productId, locationId, added, quantity, removed) VALUES (${productId}, ${locationId}, CURRENT_DATE, ${quantity}, NULL)`
+      );
+    }
   } else {
     const result = executeQuery(
       `SELECT productId FROM products WHERE products.upc = '${upc}'`
@@ -44,7 +57,7 @@ export const ScanSubmit = async (c: Context) => {
     const productId = result?.[0]?.productId;
     if (productId) {
       const { changes } = runQuery(
-        `UPDATE inventory SET removed = CURRENT_DATE WHERE inventoryId = (SELECT inventoryId FROM inventory WHERE removed IS NULL AND inventory.expiration = '${expiration}' AND inventory.locationId = '${locationId}' AND inventory.productId = '${productId}' LIMIT 1);`
+        `UPDATE inventory SET quantity = CASE WHEN quantity - ${quantity} >= 0 THEN quantity - ${quantity} ELSE 0 END, removed = CASE WHEN quantity - ${quantity} <= 0 THEN CURRENT_DATE ELSE NULL END WHERE inventoryId = (SELECT inventoryId FROM inventory WHERE removed IS NULL AND locationId = '${locationId}' AND productId = '${productId}' LIMIT 1);`
       );
       if (changes === 0) {
         showAlert = true;

@@ -37,9 +37,9 @@ The custom field allows us to generate upcs without falling upon one already in 
 
 This is the table for each individual inventory entry, this allows us to count them and stuff.
 
-| inventoryId (primary unique) | productId (secondary ref) | added (date) | expiration (date) | removed (date) |
+| inventoryId (primary unique) | productId (secondary ref) | added (date) | quantity (number) | removed (date) |
 | ---------------------------- | ------------------------- | ------------ | ----------------- | -------------- |
-| 12345                        | 12345                     | 01/01/1999   | 01/03/1999        | 01/12/2023     |
+| 12345                        | 12345                     | 01/01/1999   | 1                 | 01/12/2023     |
 | ...                          | ...                       | ...          | ...               | ...            |
 
 **Update:** There should also be a tertiary key that is an ID that points to a location, the location table should look like:
